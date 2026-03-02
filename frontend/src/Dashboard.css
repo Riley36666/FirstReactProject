@@ -1,0 +1,44 @@
+.dashboard {
+  padding: 24px;
+  font-family: system-ui, sans-serif;
+  color: #fff;
+  background: #0f172a;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+
+.online {
+  color: #22c55e;
+}
+
+.dashboard-content {
+  background: #1e293b;
+  padding: 16px;
+  border-radius: 12px;
+}

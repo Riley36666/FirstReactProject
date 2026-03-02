@@ -27,6 +27,19 @@ router.get("/passwords",requireAuth , async (req: Request, res: Response): Promi
   }
 } 
 });
+router.get("/totalPasswords", requireAuth, async (req: Request, res: Response): Promise<void> => {
+    try {
+      const total = await Password.countDocuments();
+      res.json({ total });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
+      res.status(500).send("Server error");
+    }
+  }
+);
+
 
 router.post("/login", (req: Request, res: Response): void => {
   const { username, password } = req.body;
@@ -58,13 +71,8 @@ router.post("/logout", (req: Request, res: Response) => {
   });
 });
 
-router.get("/test", (req, res) => {
-  console.log("SESSION:", req.session);
-  console.log("AUTH:", req.session.isAuth);
-  console.log("TEST SESSION ID:", req.sessionID);
-
+router.get("/user", (req, res) => {
   res.json({
-    session: req.session,
     isAuth: req.session.isAuth ?? null,
   });
 });

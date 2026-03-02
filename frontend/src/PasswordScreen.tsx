@@ -47,6 +47,24 @@ export default function PasswordScreen() {
   const copyToClipboard = async (text: string) => {
     navigator.clipboard.writeText(text);
   };
+  const getData = async () => {
+    const userData = await fetch(`${BASE_URL}/api/user`, {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await userData.json();
+    if(data.isAuth) {
+      return true
+    }else {
+      return false
+    }
+    
+  }
+  const dashboard = async () => {
+    if(await getData()){
+      window.location.href = "/dashboard";
+    }
+  }
 
   return (
     <div className="container">
@@ -69,7 +87,9 @@ export default function PasswordScreen() {
             </div>
           ))}
         </div>
-
+        <button className="dashboard-button" onClick={dashboard}>
+          Dashboard
+        </button>
         <button className="logout-button" onClick={logout}>
           Logout
         </button>
