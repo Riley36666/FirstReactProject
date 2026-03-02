@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2022",
+
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
