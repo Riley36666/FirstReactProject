@@ -1,3 +1,5 @@
+// USER LOGIN LOGIC
+
 import express, { Request, Response } from "express";
 import Password from "../db/models/Password";
 import { deriveKey, decryptPass } from "./decryptpass";
@@ -27,6 +29,7 @@ router.get("/passwords",requireAuth , async (req: Request, res: Response): Promi
   }
 } 
 });
+
 router.get("/totalPasswords", requireAuth, async (req: Request, res: Response): Promise<void> => {
     try {
       const total = await Password.countDocuments();
@@ -50,7 +53,6 @@ router.post("/login", (req: Request, res: Response): void => {
   }
 
   if (
-    username === process.env.LOGIN_USERNAME &&
     password === process.env.LOGIN_PASSWORD
   ) {
     req.session.isAuth = true; // TS now recognises this
@@ -71,11 +73,6 @@ router.post("/logout", (req: Request, res: Response) => {
   });
 });
 
-router.get("/user", (req, res) => {
-  res.json({
-    isAuth: req.session.isAuth ?? null,
-  });
-});
 
 
 export default router;

@@ -3,6 +3,7 @@ import session = require("express-session");
 import path = require("path");
 import { connectDB } from "./db/connect";
 import passwordRouter from "./logic/api";
+import userRouter from "./logic/Users"
 import dotenv = require("dotenv");
 import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
@@ -28,21 +29,16 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false,      // MUST be false on http
-      sameSite: "lax",    // MUST be lax
+      secure: false,      
+      sameSite: "lax",    
+      maxAge: 10*60*1000
     },
   })
 );
 
-function requireAuth(req: Request, res: Response, next: NextFunction) {
-  if (req.session.isAuth) return next();
-  return res.status(401).send("Unauthorized");
-}
-
-
-
 app.use(express.json());
 app.use("/api", passwordRouter);
+app.use("/users", userRouter)
 
 async function startServer() {
   await connectDB(process.env.DB as string);

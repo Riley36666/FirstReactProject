@@ -25,7 +25,7 @@ export default function Login() {
         return;
       }
 
-      window.location.href = "/passwords";
+      window.location.href = "/dashboard";
     } catch (err) {
       alert("Could not connect to server");
     }
