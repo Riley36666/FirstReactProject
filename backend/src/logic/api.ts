@@ -3,6 +3,7 @@
 import express, { Request, Response } from "express";
 import Password from "../db/models/Password";
 import { deriveKey, decryptPass } from "./decryptpass";
+import { encryptPass } from "./encryptpass";
 import requireAuth from "./Auth";
 const secret = deriveKey();
 const router = express.Router();
@@ -77,6 +78,45 @@ router.post("/logout", (req: Request, res: Response) => {
   });
 });
 
+router.post("/createPass", requireAuth, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { website, password } = req.body;
+    console.log(req.body);
+    // Basic validation
+    if (!website || !password) {
+      res.status(400).json({ error: "Website and password are required" });
+      return;
+    }
 
+    const secret = deriveKey();
+    const encryptedPassword = encryptPass(password, secret);
+
+    await Password.create({
+      Website: website,
+      Password: encryptedPassword,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Password stored successfully",
+    });
+
+  } catch (err: any) {
+    // Duplicate key error (same website already exists)
+    if (err.code === 11000) {
+      res.status(409).json({
+        success: false,
+        error: "Website already exists",
+      });
+      return;
+    }
+
+    console.error(err.message);
+    res.status(500).json({
+      success: false,
+      error: "Server error",
+    });
+  }
+});
 
 export default router;
