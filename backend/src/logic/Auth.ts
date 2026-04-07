@@ -6,8 +6,8 @@ export default function requireAuth(
   next: NextFunction
 ) {
   if (!req.session.isAuth) {
-    return res.status(401).json({ message: "Unauthorized" });
     console.log("Not auth")
+    return res.status(401).json({ message: "Unauthorized" });
   }
   next();
 }

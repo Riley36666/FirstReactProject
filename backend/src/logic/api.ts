@@ -45,7 +45,6 @@ router.get("/totalPasswords", requireAuth, async (req: Request, res: Response): 
 
 router.get("/test", requireAuth, (req: Request, res: Response) => {
   res.status(200).json({ test: true});
-  
 })
 
 
