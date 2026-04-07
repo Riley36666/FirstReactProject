@@ -7,6 +7,7 @@ export default function requireAuth(
 ) {
   if (!req.session.isAuth) {
     return res.status(401).json({ message: "Unauthorized" });
+    console.log("Not auth")
   }
   next();
 }

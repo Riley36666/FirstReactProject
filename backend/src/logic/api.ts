@@ -43,6 +43,11 @@ router.get("/totalPasswords", requireAuth, async (req: Request, res: Response): 
   }
 );
 
+router.get("/test", requireAuth, (req: Request, res: Response) => {
+  res.status(200).json({ test: true});
+  
+})
+
 
 router.post("/login", (req: Request, res: Response): void => {
   const { username, password } = req.body;
